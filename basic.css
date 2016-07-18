@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+    background-color: rgb(249, 247, 247)
+}
+canvas {
+    /*16:9*/
+    width: 800px;
+    height: 450px;
+    background-color: rgb(255, 255, 255);
+    /*border: solid;*/
+    /*border-width: 2px;*/
+}
