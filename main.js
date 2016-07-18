@@ -28,7 +28,6 @@ var W = 800, //canvasの幅を指定
     manPower = 0, // 各ユニットコスト
     iron = 0,
     wood = 0,
-    count = 0, // 時間測り用
     gameMainLoop; // ForLoop
 
 // mapの幅 P=Position,X=x座標
@@ -264,7 +263,7 @@ function makeUnits(name,howmany,player) {
     units.push(newUnit);
 }
 
-function battle() {
+function battle(count) {
     var max = units.length;
     for(var i = 0; i < max; i++) {
         var u = units[i];
@@ -420,7 +419,7 @@ function makeJudgeDisplays(menuPX,menuPY,menuX,menuY,menuInfo3PX) {
                 }
         }
 
-        //menu三番目の表示
+        // menu三番目の表示
         for (var j = 0; j < max; j++) {
             if (units[j].player === PLAYER1) {
                 if (j < 11) {
@@ -435,10 +434,16 @@ function makeJudgeDisplays(menuPX,menuPY,menuX,menuY,menuInfo3PX) {
 }
 
 gameMainLoop = function(){
-    count++;
-    makeDisplays(); //背景の描写
-    units.display();
-    battle();
-    manPower += 0.1;
+	var setup = function () { // 時間計り用
+		var innercount = 0;
+		return function () {
+			return (innercount += 1);
+		};
+	};
+	var count = setup();
 
-}; //gameの始まり
+    makeDisplays(); // 背景の描写
+    units.display();
+    battle(count());
+    manPower += 0.1;
+}; // gameの始まり
